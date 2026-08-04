@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FaceGram - Mala Interfaz</title>
+  <link rel="stylesheet" href="diseñoN.css">
+</head>
+<body>
+  <header class="top-bar">
+    <div class="brand">FACEGRAM</div>
+    <nav class="top-nav">
+      <span class="nav-item">Inicio</span>
+      <span class="nav-item">Explorar</span>
+      <span class="nav-item">Mensajes</span>
+      <span class="nav-item">Notific.</span>
+      <button id="helpBtn" class="tiny-button">?</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h2>Menú</h2>
+        <button class="bad-button">Perfil</button>
+        <button class="bad-button">Amigos</button>
+        <button class="bad-button">Config.</button>
+        <button class="bad-button">Salir</button>
+      </div>
+      <div class="sidebar-section bad-box">
+        <h2>Ayuda</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex voluptatem quaerat hic quia soluta. A, delectus similique! Culpa maxime voluptatem animi fugit ducimus error officia unde ipsam saepe. Modi, explicabo.</p>
+      </div>
+    </aside>
+
+    <section class="feed">
+      <div class="post-card bad-card">
+        <div class="post-header">
+          <div class="avatar">FG</div>
+          <div>
+            <h3>Usuario123</h3>
+            <p class="subtext">Hace 3 minutos... o hace 20?</p>
+          </div>
+        </div>
+        <p>Publicación con texto muy largo y sin párrafos, difícil de leer y con muchas mayúsculas Y SÍMBOLOS!!!! JDKASDASDKJ</p>
+        <img src="https://via.placeholder.com/640x140" alt="foto" class="bad-image">
+        <div class="post-actions">
+          <button class="action">Me gusta</button>
+          <button class="action">Compartir</button>
+          <button class="action">Editar</button>
+        </div>
+      </div>
+
+      <div class="post-card bad-card">
+        <h2 class="section-title">Publica aquí (o no a nadie le importa su vida)</h2>
+        <textarea id="postText" class="bad-input" rows="5" placeholder="Escribe algo... o no, da igual"></textarea>
+        <div class="action-row">
+          <button id="publishBtn" class="submit-button">Enviar</button>
+          <button id="wrongBtn" class="submit-button">Descartar</button>
+        </div>
+        <div id="statusMessage" class="status-message">Estado: desconocido</div>
+      </div>
+
+      <div class="post-card bad-card alert-card">
+        <h2>Nielse iba en contra de: </h2>
+        <p>esta página muestra un mal diseño a propósito para la clase, los botones no son claros, los colores no contrastan y la información está desordenada.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="errorOverlay" class="overlay hidden">
+    <div class="overlay-box">
+      <h2>ERROR</h2>
+      <p>algo salió mal noo puedes hacer nada sobre esto (pronto se arregla)</p>
+      <button id="closeOverlay" class="close-button">Cerrar</button>
+    </div>
+  </div>
+
+  <footer class="footer">paginaweb.com</footer>
+
+  <script src="nielse.js"></script>
+</body>
+</html>
