@@ -1,0 +1,143 @@
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family:CozetteVector, Arial, sans-serif;
+            display: flex; /* Coloca el tablero y la barra lateral lado a lado */
+            height: 100vh; /* Ocupa el 100% de la altura de la pantalla */
+            overflow: hidden; /* Evita barras de desplazamiento innecesarias */
+            user-select: none; /* Evita seleccionar texto por accidente al dar clics */
+        }
+
+        #tablero-corcho {
+            flex: 1; /* Ocupa todo el espacio disponible a la izquierda */
+            height: 100%;
+            position: relative; /* Permite posicionar las notas exactamente donde se da clic */
+            background-color: #d4a373; /* Color base del corcho */
+            cursor: pointer;
+        }
+
+        .instrucciones-tablero {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(112, 66, 20, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            pointer-events: none; /* Ignora clics para que pasen al tablero */
+        }
+
+        #barra-contactos {
+            width: 250px; /* Ancho fijo de la barra */
+            height: 100%;
+            background-color: #3d2314; /* Color café oscuro */
+            color: white;
+            padding: 20px;
+            box-sizing: border-box; /* Incluye el padding en el ancho total */
+        }
+
+        .titulo-contactos {
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 2px solid #5c3821;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .lista-contactos {
+            list-style: none; /* Quita los puntos de la lista */
+            padding: 0;
+            margin: 0;
+        }
+
+        .elemento-contacto {
+            background-color: #5c3821;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .punto-conectado { color: #4CAF50; font-weight: bold; }
+        .punto-desconectado { color: #888888; font-weight: bold; }
+
+        .nota-postit {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background-color: #ffff88; /* Color amarillo tipo post-it */
+            padding: 10px;
+            border-radius: 3px;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            border-top: 6px  solid #ff4444; /* Simula la tachuela/alfiler superior */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .titulo-nota { font-weight: bold; font-size: 14px; }
+        .texto-nota { font-size: 12px; color: #555; }
+        .boton-ampliar { font-size: 10px; text-align: right; color: #884400; font-weight: bold; }
+
+        #menu-opciones {
+            display: none; /* Oculto por defecto */
+            position: absolute;
+            background-color: white;
+            border: 2px solid #704214;
+            border-radius: 5px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .boton-menu {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .boton-menu:hover { background-color: #ffe8cc; }
+
+        /* Ventana emergente al ampliar la nota */
+        #ventana-ampliada {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .caja-ampliada {
+            background-color: #fffde7;
+            padding: 25px;
+            border-radius: 8px;
+            width: 350px;
+            border: 3px solid #704214;
+            position: relative;
+        }
+
+        .boton-cerrar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }

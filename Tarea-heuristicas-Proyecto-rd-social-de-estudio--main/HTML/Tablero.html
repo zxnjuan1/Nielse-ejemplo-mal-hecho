@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Study-book</title>
+    <link rel="stylesheet" href="/CSS/CSS.css">
+    <link rel="stylesheet" href="/CSS/fonts.css">
+</head>
+<body>
+
+    <!-- TABLERO DE CORCHO -->
+    <div id="tablero-corcho" onclick="abrirMenuNota(event)">
+        <div class="instrucciones-tablero">
+            Haz clic en cualquier lugar para colocar una nota
+        </div>
+    </div>
+
+    <div id="barra-contactos">
+        <div class="titulo-contactos">👥 </div>
+        <ul class="lista-contactos">
+            <li class="elemento-contacto">
+                <span>1er contacto</span>
+                <span class="punto-conectado">●</span>
+            </li>
+            <li class="elemento-contacto">
+                <span>2do contacto</span>
+                <span class="punto-desconectado">●</span>
+            </li>
+            <li class="elemento-contacto">
+                <span>3er contacto</span>
+                <span class="punto-conectado">●</span>
+            </li>
+        </ul>
+    </div>
+
+    <div id="menu-opciones">
+        <button class="boton-menu" onclick="crearNota('📓 Estudio ', '25:00 min')"> 📓⌛Sesion de estudio </button>
+        <button class="boton-menu" onclick="crearNota('✉️ Carta', 'Mensaje privado...')">✉️ Enviar menaje</button>
+        <button class="boton-menu" onclick="crearNota('📝 Nota de Clase', 'Tus apuntes...')">📝 Tomar nota</button>
+        <!--<button class="boton-menu" onclick="crearNota('📸 Subir foto', 'Tus archivos...')">📝 Tomar nota</button>-->
+    </div>
+
+    <div id="ventana-ampliada" onclick="cerrarVentana()">
+        <div class="caja-ampliada" onclick="event.stopPropagation()">
+            <button class="boton-cerrar" onclick="cerrarVentana()">✕</button>
+            <h3 id="titulo-ampliado" style="margin-top:0;"></h3>
+            <p id="texto-ampliado"></p>
+            <textarea style="width: 100%; height: 80px; margin-top: 10px;" placeholder="Escribe tus notas aquí..."></textarea>
+            
+        </div>
+    </div>
+
+    <script src="/JSCRIPTS/script.js">
+        
+    </script>
+</body>
+</html>

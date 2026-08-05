@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Studygram</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: CozetteVector,-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #f3f4f6;
+            user-select: none;
+        }
+
+        /* BARRA SUPERIOR MODERNA (ESTILO IMAGEN DE REFERENCIA) */
+        #barra-superior {
+            height: 50px;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 2px solid #262626;
+            z-index: 10;
+        }
+
+        .menu-superior {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .item-menu {
+            cursor: pointer;
+            color: #a3a3a3;
+            transition: color 0.2s;
+        }
+
+        .item-menu:hover { color: #ffffff; }
+
+        .indicador-racha {
+            border: 1px solid #404040;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: #d4d4d4;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        #pantalla-principal {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 50px);
+        }
+
+        /* TABLERO MINIMALISTA CON PATRÓN DE PUNTOS */
+        #tablero-principal {
+            flex: 1;
+            height: 100%;
+            position: relative;
+            background-color: #e5e7eb;
+            /* Patrón de puntos minimalista */
+            background-image: radial-gradient(#9ca3af 1.2px, transparent 1.2px);
+            background-size: 18px 18px;
+            cursor: pointer;
+        }
+
+        /* BARRA LATERAL DERECHA (MINIMALISTA) */
+        #barra-contactos {
+            width: 240px;
+            background-color: #171717;
+            color: #f5f5f5;
+            padding: 20px;
+            border-left: 1px solid #262626;
+        }
+
+        .titulo-contactos {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: #a3a3a3;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .contacto {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background-color: #262626;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .estado-online { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; }
+        .estado-offline { width: 8px; height: 8px; background-color: #737373; border-radius: 50%; }
+
+        /* TARJETAS NOTA MINIMALISTAS (ARRASTRABLES) */
+        .tarjeta-nota {
+            position: absolute;
+            width: 170px;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            z-index: 1;
+            transition: box-shadow 0.2s;
+        }
+
+        .tarjeta-nota:active { cursor: grabbing; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+
+        .titulo-nota { font-size: 13px; font-weight: 700; color: #171717; }
+        .texto-nota { font-size: 12px; color: #737373; }
+        .tag-ampliar { font-size: 10px; font-weight: 600; color: #2563eb; text-align: right; }
+
+        /* MENÚ DESPLEGABLE */
+        #menu-opciones {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            z-index: 100;
+            width: 180px;
+        }
+
+        .opcion-btn {
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+            cursor: pointer;
+        }
+
+        .opcion-btn:hover { background-color: #f3f4f6; }
+
+        /* MODAL DE AMPLIAACIÓN MINIMALISTA */
+        #modal-ampliado {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .contenido-modal {
+            background-color: #ffffff;
+            width: 360px;
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+        }
+
+        .btn-cerrar {
+            position: absolute;
+            top: 16px; right: 20px;
+            border: none; background: none;
+            font-size: 16px; color: #a3a3a3; cursor: pointer;
+        }
+
+        .campo-entrada {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            margin-top: 6px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .barra-base { width: 100%; height: 8px; background-color: #e5e7eb; border-radius: 10px; overflow: hidden; margin: 10px 0; }
+        .barra-avance { width: 35%; height: 100%; background-color: #171717; }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR ESTILO DASHBOARD -->
+    <header id="barra-superior">
+        <nav class="menu-superior">
+            <span>✏️</span>
+            <span class="item-menu">CORNELL</span>
+            <span class="item-menu">MAPA</span>
+            <span class="item-menu">MÉTRICAS</span>
+            <span class="item-menu">FOTO</span>
+        </nav>
+        <div class="indicador-racha">RACHA: 1 DIA</div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div id="pantalla-principal">
+        <!-- TABLERO CON PUNTOS -->
+        <main id="tablero-principal" onclick="abrirMenuOpciones(event)"></main>
+
+        <!-- CONTACTOS -->
+        <aside id="barra-contactos">
+            <div class="titulo-contactos">CONTACTOS</div>
+            <div class="contacto"><span>1er contacto</span><div class="estado-online"></div></div>
+            <div class="contacto"><span>2do contacto</span><div class="estado-offline"></div></div>
+        </aside>
+    </div>
+
+    <!-- MENÚ EMERGENTE -->
+    <div id="menu-opciones">
+        <button class="opcion-btn" onclick="crearTarjeta('⏱️ Cronómetro', 'pomodoro')">⏱️ Pomodoro</button>
+        <button class="opcion-btn" onclick="crearTarjeta('✉️ Carta', 'carta')">✉️ Carta / Chat</button>
+        <button class="opcion-btn" onclick="crearTarjeta('📝 Nota', 'nota')">📝 Nota de clase</button>
+    </div>
+
+    <!-- MODAL PARA VER DETALLES -->
+    <div id="modal-ampliado" onclick="cerrarModal()">
+        <div class="contenido-modal" onclick="event.stopPropagation()">
+            <button class="btn-cerrar" onclick="cerrarModal()">✕</button>
+            <h3 id="titulo-modal" style="margin-bottom: 15px; font-size: 16px;"></h3>
+            <div id="cuerpo-modal"></div>
+        </div>
+    </div>
+
+    <script>
+        let posClicX = 0;
+        let posClicY = 0;
+        let elementoArrastrándose = null;
+        let offsetOffsetX = 0;
+        let offsetOffsetY = 0;
+
+        function abrirMenuOpciones(e) {
+            if (e.target.id !== 'tablero-principal') return;
+            posClicX = e.clientX;
+            posClicY = e.clientY - 50; // Ajuste por el alto de la barra superior
+
+            const menu = document.getElementById('menu-opciones');
+            menu.style.left = posClicX + 'px';
+            menu.style.top = (e.clientY) + 'px';
+            menu.style.display = 'block';
+        }
+
+        function crearTarjeta(titulo, tipo) {
+            document.getElementById('menu-opciones').style.display = 'none';
+
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'tarjeta-nota';
+            tarjeta.style.left = (posClicX - 85) + 'px';
+            tarjeta.style.top = (posClicY - 40) + 'px';
+
+            tarjeta.innerHTML = `
+                <div class="titulo-nota">${titulo}</div>
+                <div class="texto-nota">${tipo === 'pomodoro' ? '25:00 min' : 'Haz clic para expandir...'}</div>
+                <div class="tag-ampliar">Ver más ➔</div>
+            `;
+
+            // Lógica para arrastrar (Drag)
+            tarjeta.onmousedown = function(e) {
+                e.stopPropagation();
+                elementoArrastrándose = tarjeta;
+                offsetOffsetX = e.clientX - tarjeta.offsetLeft;
+                offsetOffsetY = e.clientY - tarjeta.offsetTop;
+            };
+
+            // Lógica para ampliar al hacer clic rápido
+            tarjeta.onclick = function(e) {
+                e.stopPropagation();
+                abrirDetalle(titulo, tipo);
+            };
+
+            document.getElementById('tablero-principal').appendChild(tarjeta);
+        }
+
+        document.onmousemove = function(e) {
+            if (elementoArrastrándose) {
+                elementoArrastrándose.style.left = (e.clientX - offsetOffsetX) + 'px';
+                elementoArrastrándose.style.top = (e.clientY - offsetOffsetY) + 'px';
+            }
+        };
+
+        document.onmouseup = function() {
+            elementoArrastrándose = null;
+        };
+
+        function abrirDetalle(titulo, tipo) {
+            document.getElementById('titulo-modal').innerText = titulo;
+            const cuerpo = document.getElementById('cuerpo-modal');
+
+            if (tipo === 'pomodoro') {
+                cuerpo.innerHTML = `
+                    <label style="font-size: 12px; font-weight: 600; color: #374151;">Objetivo principal:</label>
+                    <input type="text" class="campo-entrada" placeholder="Escribe tu objetivo aquí...">
+                    
+                    <label style="font-size: 12px; font-weight: 600; color: #374151;">Tiempo estimado (min):</label>
+                    <input type="number" class="campo-entrada" value="25">
+
+                    <div style="text-align: center; font-size: 32px; font-weight: 800; margin: 15px 0; color: #171717;">25:00</div>
+                    
+                    <div class="barra-base"><div class="barra-avance"></div></div>
+                `;
+            } else {
+                cuerpo.innerHTML = `
+                    <textarea class="campo-entrada" style="height: 100px; resize: none;" placeholder="Escribe tus apuntes o mensajes..."></textarea>
+                `;
+            }
+
+            document.getElementById('modal-ampliado').style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-ampliado').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
